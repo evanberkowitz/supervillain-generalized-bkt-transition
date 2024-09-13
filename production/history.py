@@ -40,8 +40,13 @@ def visualize(ensembles):
     for E in ensembles:
         fig, ax = plot_history(E)
         figs.append(fig)
-
     return figs
+
+def create_pdf(ensembles, PDF):
+    for E in ensembles:
+        fig, ax = plot_history(E)
+        PDF.save(fig)
+        plt.close(fig)
 
 if __name__ == '__main__':
 
@@ -61,10 +66,10 @@ if __name__ == '__main__':
         ensembles = ensembles.apply(parallel.io_prep, axis=1)
     logger.info(ensembles)
 
-    figs = visualize(results.ensembles(ensembles))
-
     if args.pdf:
-        results.pdf(args.pdf, figs)
+        with results.PDF(args.pdf) as PDF:
+            create_pdf(results.ensembles(ensembles), PDF)
     else:
+        figs = visualize(results.ensembles(ensembles))
         plt.show()
 
