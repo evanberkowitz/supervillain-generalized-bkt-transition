@@ -44,7 +44,7 @@ def plot_correlators(ensembles,
         for o, a in zip(correlators, ax):
             a.errorbar(
                     dx,
-                    L.linearize(L.irrep(row[o].real))[1:], L.linearize(L.irrep(row[o+'±']))[1:],
+                    L.linearize(L.irrep(row[o]))[1:].real, L.linearize(L.irrep(row[o+'±']))[1:].real,
                     linestyle='none',
                     label=f"N={row['N']}",
                     marker=('o' if (row['W']==1 and o=='Vortex_Vortex') else 'none')
