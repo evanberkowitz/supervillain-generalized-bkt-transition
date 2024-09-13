@@ -93,7 +93,7 @@ def plot_z3(W, N, ensembles):
     # so on top before rotation.  That's easiest to accomplish by having a two-axis plot.
     cbt = ax[-1].twiny()
     cbt.set_xticks(())
-    cbt.set_xlabel(r'Increasing Frequency', fontsize=18, rotation=180)
+    cbt.set_xlabel(r'$\longrightarrow$ Increasing Frequency $\longrightarrow$', fontsize=18, rotation=180)
     cbt.xaxis.set_label_coords(.5, 1.5)
 
     return fig, ax
