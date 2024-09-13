@@ -1,0 +1,125 @@
+* Legible str(Worm generators)
+
+* Log generator report
+
+This is much cleaner than printing it after.
+
+* Derived registry
+
+This makes it easy to loop everything a Bootstrap object understands:
+the primary observables AND the derived quantities, by doing eg.
+
+```python
+for o in (supervillain.observables | supervillain.derivedQuantities):
+    ...
+```
+
+* Prepare for new production scripts
+
+* Simple test ensemble input file
+
+* cli.input_file type to parse modules
+
+* Many different steps needed for some example production
+
+* Simple production and thermalization scripts
+
+* Scaling
+
+ - Scaling script
+ - Add --figure, --pdf to test input file
+ - Add results.pdf utility
+
+* Demo transition + Makefile
+
+* Plot ensemble histories
+
+ - results.ensembles generator yields only those ensembles on disk.
+ - plot histories
+ - add a simple Makefile
+
+* Rename demo-{thermalize,data,bootstrap}.h5 to ...-scaling-...
+
+One demo is not more important or enlightening than another!
+
+* Use hammer in tests
+
+* Forgotten plt import
+
+* Don't automatically tqdm progress
+
+* Ensembles get -ensemble rather than -data suffix
+
+* Hide data in /demo directory
+
+* Parallelize via multiprocessing
+
+* Some comments in results collector
+
+* Bootstrap.estimate only collapses the bootstrap axis
+
+Previously the estimate of any observable at all whatsoever would
+produce a single number, even a two-point correlator, which should have
+produced a whole volume's worth of numbers.
+
+* Plot two-point correlators
+
+* Add correlator plotting to scaling demo
+
+* Scaling+transition plots on partial parallel results
+
+* --parallel-files for debugging
+
+* Ensemble tau defaults to 2
+
+Assuming the thermalization production has done its job, the
+autocorrelation time will be short.  But if physically some observables
+are very very small (like TorusWrappings) you might not get enough
+fluctuation in an ensemble.  If that observable was what was slow during
+thermalization, you might just get unlucky in terms of its evolution
+in strides of τ: the odds of seeing a change are like 1/τ.
+
+* Z3 breaking figure
+
+* Feature/numba worm (#142)
+
+* numba-aware _Lattice2D stub
+* numba acceleration of worldline worm
+* old implementation moved to reference_implementations.worldline.ClassicWorm
+* Add numba to installation requirements.txt
+* Monitors
+    Monitors are do-nothing generators which let you perform arbitrary
+    actions during the generation loop.
+* Fix example/action-comparison.py cli defaults + types
+
+* With a newer numba we can pass the np.rng object
+
+This previously caused problems; I encountered the same as in
+
+    https://numba.discourse.group/t/numba-not-recognizing-numpy-random-generator-obj/1766/5
+
+but with numba 0.60.0 no problem at all.
+
+* Require recent pandas
+
+* Villain worm with numba acceleration
+
+* test_validity checks no constraint-violating cfgs are generated
+
+* history.py can use --parallel files.
+
+* Reorganize demo; add breaking demo.
+
+* correlators can plot parallel files, skip V if W=1
+
+* Improvements to scaling plots
+
+ - Leave on minor y-ticks so that y-grid will show, to guide the eye.
+ - Don't show vortex data when W=1; restore it with --all cli flag
+ - add TeX labels
+
+* Nearing finalized production scripts
+
+* Spin out production scripts into their own repo.
+
+Matches supervillain-generalized-bkt-transition commit c6ef22b9044f8af9a06dd2240584f6e0baa95698
