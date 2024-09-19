@@ -55,11 +55,13 @@ N=7
 # The worst was thermalizing kappa=0.08, took about an hour and a half on my machine.
 #                                                                                       # Autocorrelation times
 #                                                                                       # during thermalization
-ensembles.append(worldline | {'W': W, 'kappa': 0.08, 'N':  N, 'thermalize': 1000000})   # τ = 1312
+ensembles.append(worldline | {'W': W, 'kappa': 0.08, 'N':  N, 'thermalize': 1000000, 
+                              'configurations': 1000                               })   # τ =  313
 ensembles.append(worldline | {'W': W, 'kappa': 0.09, 'N':  N, 'thermalize': 100000})    # τ =  109
 ensembles.append(worldline | {'W': W, 'kappa': 0.12, 'N':  N, 'thermalize': 10000})     # τ =   16
 ensembles.append(worldline | {'W': W, 'kappa': 0.15, 'N':  N, 'thermalize': 1000})      # τ =    4
 ensembles.append(worldline | {'W': W, 'kappa': 0.18, 'N':  N, 'thermalize': 1000})      # τ =    4
+#                                                                                       # (EXAMPLES, your run may differ in details)
 
 
 ################################################################################

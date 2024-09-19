@@ -4,6 +4,8 @@ from collections import deque
 from itertools import product
 import numpy as np
 
+import matplotlib
+matplotlib.rcParams['mathtext.fontset'] = 'stix'
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from matplotlib.patches import Polygon
@@ -39,7 +41,8 @@ def plot_z3(W, N, ensembles):
 
     # We'll create one histogram for each ensemble and set aside a little space for the colorbar.
 
-    histogram_size = 8
+    histogram_size = 2
+    fontsize = 12
     colorbar_width = 0.4
     cmap='hot'
     fig, ax = plt.subplots(len(ensembles)+1, 1, figsize=(histogram_size, colorbar_width+len(ensembles)*histogram_size),
@@ -50,6 +53,7 @@ def plot_z3(W, N, ensembles):
 
         W = E.Action.W
         L = E.Action.Lattice
+        gridsize = (L.sites, (1+L.sites)//2)
 
         rotate = 1j
         c = rotate * np.mean(np.exp(2j*np.pi*E.v/W), axis=(-2,-1))
@@ -64,18 +68,18 @@ def plot_z3(W, N, ensembles):
         #possibilities=np.einsum('pa,a->p', weights, rotate*vertices)
         #hb = a.hexbin(possibilities.real, possibilities.imag,
         hb = a.hexbin(c.real, c.imag,
-                       gridsize=(L.sites, (1+L.sites)//2),
+                       gridsize=gridsize,
                        extent=extent,
                        cmap=cmap,
                       )
 
         #a.scatter(possibilities.real, possibilities.imag, color='black', facecolor='none')
 
-        a.text(-0.75, np.sqrt(3)/4, f'κ={E.Action.kappa}\nτ={E.generator.stride}', fontsize=18, rotation='vertical')
+        a.text(-0.75, np.sqrt(3)/4, r'$\kappa'+f'={E.Action.kappa}$\n'+r'$τ'+f'={E.generator.stride}$', fontsize=fontsize, rotation='vertical')
         a.set_aspect('equal')
 
         # Create a triangular patch and add it to the plot to clip the binning
-        polygon = Polygon(np.stack(tuple(np.array([v.real, v.imag]) for v in rotate*vertices)), closed=True, edgecolor='black', fill=False, linewidth=2)
+        polygon = Polygon(np.stack(tuple(np.array([v.real, v.imag]) for v in rotate*vertices)), closed=True, edgecolor='black', fill=False, linewidth=1)
         a.add_patch(polygon)
         hb.set_clip_path(polygon)
 
@@ -93,8 +97,8 @@ def plot_z3(W, N, ensembles):
     # so on top before rotation.  That's easiest to accomplish by having a two-axis plot.
     cbt = ax[-1].twiny()
     cbt.set_xticks(())
-    cbt.set_xlabel(r'$\longrightarrow$ Increasing Frequency $\longrightarrow$', fontsize=18, rotation=180)
-    cbt.xaxis.set_label_coords(.5, 1.5)
+    cbt.set_xlabel(r'$\longrightarrow$ Frequency $\longrightarrow$', fontsize=fontsize, rotation=180)
+    cbt.xaxis.set_label_coords(.5, 1.75)
 
     return fig, ax
 
@@ -108,7 +112,7 @@ def visualize(ensembles):
             logger.warning(f'Not plotting the breaking for {W=}.')
             continue
         fig, ax = plot_z3(W, N, data)
-        ax[0].text(-np.sqrt(3)/2, 1, f'W=3\nN={N}', fontsize=24, rotation='vertical', verticalalignment='bottom',)
+        ax[0].text(0.25, 1, r'$N='+f'{N}$', fontsize=24, rotation='vertical', verticalalignment='bottom',)
 
         fig.tight_layout()
         figs.append(fig)
