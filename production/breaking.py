@@ -5,7 +5,8 @@ from itertools import product
 import numpy as np
 
 import matplotlib
-matplotlib.rcParams['mathtext.fontset'] = 'stix'
+matplotlib.rcParams['text.usetex'] = True
+matplotlib.rcParams['font.family'] = "Computer Modern Roman"
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from matplotlib.patches import Polygon
@@ -41,8 +42,8 @@ def plot_z3(W, N, ensembles):
 
     # We'll create one histogram for each ensemble and set aside a little space for the colorbar.
 
-    histogram_size = 2
-    fontsize = 12
+    histogram_size = 10
+    fontsize = 48
     colorbar_width = 0.4
     cmap='hot'
     fig, ax = plt.subplots(len(ensembles)+1, 1, figsize=(histogram_size, colorbar_width+len(ensembles)*histogram_size),
@@ -75,7 +76,7 @@ def plot_z3(W, N, ensembles):
 
         #a.scatter(possibilities.real, possibilities.imag, color='black', facecolor='none')
 
-        a.text(-0.75, np.sqrt(3)/4, r'$\kappa'+f'={E.Action.kappa}$\n'+r'$τ'+f'={E.generator.stride}$', fontsize=fontsize, rotation='vertical')
+        a.text(-0.75, np.sqrt(3)/4, r'$\kappa'+f'={E.Action.kappa}$\n'+r'$\tau'+f'={E.generator.stride}$', fontsize=fontsize, rotation='vertical')
         a.set_aspect('equal')
 
         # Create a triangular patch and add it to the plot to clip the binning
@@ -112,7 +113,7 @@ def visualize(ensembles):
             logger.warning(f'Not plotting the breaking for {W=}.')
             continue
         fig, ax = plot_z3(W, N, data)
-        ax[0].text(0.25, 1, r'$N='+f'{N}$', fontsize=24, rotation='vertical', verticalalignment='bottom',)
+        ax[0].text(0.25, 1, r'$N='+f'{N}$', fontsize=96, rotation='vertical', verticalalignment='bottom',)
 
         fig.tight_layout()
         figs.append(fig)
