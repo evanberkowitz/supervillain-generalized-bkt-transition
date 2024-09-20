@@ -65,19 +65,25 @@ large  = (64, )
 ################################################################################
 
 low = (0.02, 0.04, 0.06)
-close_to_critical = (0.08, 0.085, 0.09)
+just_below_critical = (0.07, 0.08,)
+critical = (0.085, )
+just_above_critical = (0.09, )
 high = (0.11, 0.13)
+brackets_critical=(just_below_critical[-1], critical[0], just_above_critical[0])
 
 ################################################################################
 W=3
 ################################################################################
 
 for kappa, N in product(low, wee):
-    ensembles.append(villain | {'W': W, 'kappa': kappa, 'N':  N, })
+    ensembles.append(villain | {'W': W, 'kappa': kappa, 'N':  N, 'configurations': 20000})
 
-for kappa, N in product(close_to_critical, small+medium):
-    ensembles.append(villain | {'W': W, 'kappa': kappa, 'N':  N, })
+for kappa, N in product(just_below_critical + critical + just_above_critical, small+medium):
+    ensembles.append(villain | {'W': W, 'kappa': kappa, 'N':  N, 'configurations': 10000})
 
+#for kappa, N in product(just_above_critical, small+medium):
+#    ensembles.append(worldline | {'W': W, 'kappa': kappa, 'N':  N, 'thermalize': 10000})
+#
 for kappa, N in product(high, wee):
     ensembles.append(worldline | {'W': W, 'kappa': kappa, 'N':  N, 'thermalize': 10000})
 

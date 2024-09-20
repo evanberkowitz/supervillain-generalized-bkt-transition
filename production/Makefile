@@ -35,8 +35,8 @@ demo/tidy:
 demo/clean: demo/tidy
 	$(RM) demo/{scaling,transition,breaking}*h5
 
-paper-figures.tar.gz: breaking .WAIT scaling
-	tar -cvzf paper-figures.tar.gz Z3-breaking-N{3,7}.pdf scaling/W{1,2,3}.pdf
+paper-figures.tar.gz: breaking .WAIT scaling .WAIT scaling/result
+	tar -cvzf paper-figures.tar.gz Z3-breaking-N{3,7}.pdf scaling/W{1,2,3}.pdf scaling/result.pdf
 
 .PHONY: breaking
 breaking: \
@@ -60,6 +60,9 @@ scaling/W%.pdf: scaling.py scaling/W=%.py
 	python production.py $(PARALLEL) scaling/W=$*.py
 	python history.py $(PARALLEL) scaling/W=$*.py --pdf scaling/W$*-history.pdf
 	python scaling.py $(PARALLEL) scaling/W=$*.py --pdf scaling/W$*.pdf
+
+scaling/result.pdf: result.py
+	python result.py --pdf scaling/result.pdf
 
 paper-tidy:
 	$(RM) Z3-breaking.pdf

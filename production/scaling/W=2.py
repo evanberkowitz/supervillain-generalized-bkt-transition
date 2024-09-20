@@ -6,6 +6,11 @@ import pandas as pd
 
 ensembles = deque()
 
+# Our original W=1 runs included some very small κs, which we can include if
+# small_kappas = True
+# or exclude if
+small_kappas = False
+
 ################################################################################
 # STORAGE
 # Where should we write things to disk?
@@ -64,13 +69,18 @@ large  = (64, )
 # COUPLINGS
 ################################################################################
 
-low = (0.100, 0.125, 0.150, )
+very_low = (0.100, 0.125, )
+low = (0.150, )
 near_critical = (0.170, 0.200, 0.250, 0.30, )
 brackets_critical = (0.180, 0.185, 0.190, )
 
 ################################################################################
 W=2
 ################################################################################
+
+if small_kappas:
+    for kappa, N in product(very_low, wee):
+        ensembles.append(villain | {'W': W, 'kappa': kappa, 'N':  N, })
 
 for kappa, N in product(low, wee):
     ensembles.append(villain | {'W': W, 'kappa': kappa, 'N':  N, })
