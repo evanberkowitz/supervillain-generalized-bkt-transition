@@ -35,21 +35,29 @@ demo/tidy:
 demo/clean: demo/tidy
 	$(RM) demo/{scaling,transition,breaking}*h5
 
-.PHONY: paper
-paper: Z3-breaking.pdf .WAIT scaling
+paper-figures.tar.gz: breaking .WAIT scaling
+	tar -cvzf paper-figures.tar.gz Z3-breaking-N{3,7}.pdf scaling/W{1,2,3}.pdf
 
-Z3-breaking.pdf: breaking.py Z3-breaking.py
-	python production.py $(PARALLEL) Z3-breaking.py
-	python breaking.py $(PARALLEL) Z3-breaking.py --pdf Z3-breaking.pdf
+.PHONY: breaking
+breaking: \
+	Z3-breaking-N3.pdf .WAIT \
+	Z3-breaking-N7.pdf
+
+Z3-breaking-N3.pdf: demo/breaking.pdf
+	cp demo/breaking.pdf Z3-breaking-N3.pdf
+
+Z3-breaking-N7.pdf: breaking.py Z3-breaking-N7.py
+	python production.py $(PARALLEL) Z3-breaking-N7.py
+	python breaking.py $(PARALLEL) Z3-breaking-N7.py --pdf Z3-breaking-N7.pdf
 
 .PHONY: scaling
 scaling: \
-	scaling-W1.pdf .WAIT \
-	scaling-W2.pdf .WAIT \
-	scaling-W3.pdf
+	scaling/W1.pdf .WAIT \
+	scaling/W2.pdf .WAIT \
+	scaling/W3.pdf
 
 scaling/W%.pdf: scaling.py scaling/W=%.py
-	#python production.py $(PARALLEL) scaling/W=$*.py
+	python production.py $(PARALLEL) scaling/W=$*.py
 	python history.py $(PARALLEL) scaling/W=$*.py --pdf scaling/W$*-history.pdf
 	python scaling.py $(PARALLEL) scaling/W=$*.py --pdf scaling/W$*.pdf
 

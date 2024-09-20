@@ -12,9 +12,9 @@ ensembles = deque()
 ################################################################################
 
 storage = {
-    'thermalization storage': 'Z3-breaking/thermalize.h5',
-    'ensemble storage':  'Z3-breaking/ensemble.h5',
-    'bootstrap storage': 'Z3-breaking/bootstrap.h5',
+    'thermalization storage': 'Z3-breaking-N7/thermalize.h5',
+    'ensemble storage':  'Z3-breaking-N7/ensemble.h5',
+    'bootstrap storage': 'Z3-breaking-N7/bootstrap.h5',
 }
 
 ################################################################################
